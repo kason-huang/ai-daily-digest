@@ -2,7 +2,7 @@
 
 skill 制作详情可查看 ➡️ https://mp.weixin.qq.com/s/rkQ28KTZs5QeZqjwSCvR4Q
 
-从 [Andrej Karpathy](https://x.com/karpathy) 推荐的 90 个 Hacker News 顶级技术博客中抓取最新文章，通过 AI 多维评分筛选，生成一份结构化的每日精选日报。默认使用 Gemini，并支持自动降级到 OpenAI 兼容 API。
+从 [Andrej Karpathy](https://x.com/karpathy) 推荐的 90 个 Hacker News 顶级技术博客 + ArXiv 论文源 + AI 实验室博客中抓取最新文章，通过 AI 多维评分筛选，生成一份结构化的每日精选日报。默认使用 Gemini，并支持自动降级到 OpenAI 兼容 API。
 
 ![AI Daily Digest 概览](assets/overview.png)
 
@@ -139,8 +139,13 @@ RSS 抓取 → 时间过滤 → AI 评分+分类 → AI 摘要+翻译 → 趋势
 
 ## 信息源
 
-90 个 RSS 源精选自 Hacker News 社区最受欢迎的独立技术博客，包括但不限于：
+98 个 RSS 源，包括：
 
 > Simon Willison · Paul Graham · Dan Abramov · Gwern · Krebs on Security · Antirez · John Gruber · Troy Hunt · Mitchell Hashimoto · Steve Blank · Eli Bendersky · Fabien Sanglard ...
 
 完整列表内嵌于 `scripts/digest.ts`。
+
+**扩展源（新增）：**
+- ArXiv: cs.AI (人工智能)、cs.RO (机器人学)、cs.LG (机器学习)
+- AI 实验室: Google DeepMind、OpenAI、Anthropic
+- 研究机构: Berkeley AI Research (BAIR)、MIT AI

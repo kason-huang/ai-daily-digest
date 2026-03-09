@@ -14,8 +14,8 @@ const FEED_CONCURRENCY = 10;
 const GEMINI_BATCH_SIZE = 10;
 const MAX_CONCURRENT_GEMINI = 2;
 
-// 90 RSS feeds from Hacker News Popularity Contest 2025 (curated by Karpathy)
-const RSS_FEEDS: Array<{ name: string; xmlUrl: string; htmlUrl: string }> = [
+// 90 RSS feeds from Hacker News Popularity Contest 2025 (curated by Karpathy) + 8 extended feeds
+const RSS_FEEDS: RssFeed[] = [
   { name: "simonwillison.net", xmlUrl: "https://simonwillison.net/atom/everything/", htmlUrl: "https://simonwillison.net" },
   { name: "jeffgeerling.com", xmlUrl: "https://www.jeffgeerling.com/blog.xml", htmlUrl: "https://jeffgeerling.com" },
   { name: "seangoedecke.com", xmlUrl: "https://www.seangoedecke.com/rss.xml", htmlUrl: "https://seangoedecke.com" },
@@ -108,6 +108,24 @@ const RSS_FEEDS: Array<{ name: string; xmlUrl: string; htmlUrl: string }> = [
   { name: "mjg59.dreamwidth.org", xmlUrl: "https://mjg59.dreamwidth.org/data/rss", htmlUrl: "https://mjg59.dreamwidth.org" },
   { name: "computer.rip", xmlUrl: "https://computer.rip/rss.xml", htmlUrl: "https://computer.rip" },
   { name: "tedunangst.com", xmlUrl: "https://www.tedunangst.com/flak/rss", htmlUrl: "https://tedunangst.com" },
+
+  // ============================================================================
+  // Extended: AI/ML Paper Sources
+  // ============================================================================
+
+  // ArXiv Feeds (AI/ML/Robotics papers)
+  { name: "ArXiv CS.AI", xmlUrl: "https://rss.arxiv.org/rss/cs.AI", htmlUrl: "https://arxiv.org/list/cs.AI/recent", category: "arxiv" },
+  { name: "ArXiv CS.RO", xmlUrl: "https://rss.arxiv.org/rss/cs.RO", htmlUrl: "https://arxiv.org/list/cs.RO/recent", category: "arxiv" },
+  { name: "ArXiv CS.LG", xmlUrl: "https://rss.arxiv.org/rss/cs.LG", htmlUrl: "https://arxiv.org/list/cs.LG/recent", category: "arxiv" },
+
+  // AI Lab Blogs
+  { name: "Google DeepMind", xmlUrl: "https://deepmind.google/blog/feed/basic/", htmlUrl: "https://deepmind.google/blog/", category: "ai-lab" },
+  { name: "OpenAI News", xmlUrl: "https://openai.com/news/rss.xml", htmlUrl: "https://openai.com/news", category: "ai-lab" },
+  { name: "Anthropic News", xmlUrl: "https://rsshub.app/anthropic/news", htmlUrl: "https://www.anthropic.com/news", category: "ai-lab" },
+
+  // Research Labs (Embodied AI focus)
+  { name: "BAIR Blog", xmlUrl: "http://bair.berkeley.edu/blog/feed.xml", htmlUrl: "http://bair.berkeley.edu/blog", category: "research" },
+  { name: "MIT AI News", xmlUrl: "https://news.mit.edu/rss/topic/artificial-intelligence2", htmlUrl: "https://news.mit.edu/topic/artificial-intelligence2", category: "research" },
 ];
 
 // ============================================================================
@@ -124,6 +142,16 @@ const CATEGORY_META: Record<CategoryId, { emoji: string; label: string }> = {
   'opinion':     { emoji: '💡', label: '观点 / 杂谈' },
   'other':       { emoji: '📝', label: '其他' },
 };
+
+// Feed source categories for organization
+type FeedCategory = 'blog' | 'arxiv' | 'ai-lab' | 'conference' | 'research';
+
+interface RssFeed {
+  name: string;
+  xmlUrl: string;
+  htmlUrl: string;
+  category?: FeedCategory;
+}
 
 interface Article {
   title: string;
