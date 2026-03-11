@@ -940,7 +940,7 @@ async function summarizeArticles(
   lang: 'zh' | 'en'
 ): Promise<Map<number, { titleZh: string; summary: string; reason: string }>> {
   const summaries = new Map<number, { titleZh: string; summary: string; reason: string }>();
-  
+
   const indexed = articles.map(a => ({
     index: a.index,
     title: a.title,
@@ -948,43 +948,66 @@ async function summarizeArticles(
     sourceName: a.sourceName,
     link: a.link,
   }));
-  
+
   const batches: typeof indexed[] = [];
   for (let i = 0; i < indexed.length; i += GEMINI_BATCH_SIZE) {
     batches.push(indexed.slice(i, i + GEMINI_BATCH_SIZE));
   }
-  
+
   console.log(`[digest] Generating summaries for ${articles.length} articles in ${batches.length} batches`);
-  
+
   for (let i = 0; i < batches.length; i += MAX_CONCURRENT_GEMINI) {
     const batchGroup = batches.slice(i, i + MAX_CONCURRENT_GEMINI);
     const promises = batchGroup.map(async (batch) => {
-      try {
-        const prompt = buildSummaryPrompt(batch, lang);
-        const responseText = await aiClient.call(prompt);
-        const parsed = parseJsonResponse<GeminiSummaryResult>(responseText);
-        
-        if (parsed.results && Array.isArray(parsed.results)) {
-          for (const result of parsed.results) {
-            summaries.set(result.index, {
-              titleZh: result.titleZh || '',
-              summary: result.summary || '',
-              reason: result.reason || '',
-            });
+      let lastError: Error | null = null;
+
+      for (let attempt = 0; attempt <= AI_MAX_RETRIES; attempt++) {
+        try {
+          const prompt = buildSummaryPrompt(batch, lang);
+          const responseText = await aiClient.call(prompt);
+          const parsed = parseJsonResponse<GeminiSummaryResult>(responseText);
+
+          if (parsed.results && Array.isArray(parsed.results)) {
+            for (const result of parsed.results) {
+              summaries.set(result.index, {
+                titleZh: result.titleZh || '',
+                summary: result.summary || '',
+                reason: result.reason || '',
+              });
+            }
           }
-        }
-      } catch (error) {
-        console.warn(`[digest] Summary batch failed: ${error instanceof Error ? error.message : String(error)}`);
-        for (const item of batch) {
-          summaries.set(item.index, { titleZh: item.title, summary: item.title, reason: '' });
+
+          // Success: break retry loop
+          return;
+        } catch (error) {
+          lastError = error instanceof Error ? error : new Error(String(error));
+
+          // Don't retry on last attempt
+          if (attempt >= AI_MAX_RETRIES) {
+            break;
+          }
+
+          const delay = Math.min(
+            AI_INITIAL_RETRY_DELAY_MS * Math.pow(2, attempt),
+            AI_MAX_RETRY_DELAY_MS
+          );
+
+          console.warn(`[digest] Summary batch failed (attempt ${attempt + 1}/${AI_MAX_RETRIES + 1}), retrying after ${Math.round(delay / 1000)}s: ${lastError.message}`);
+          await sleep(delay);
         }
       }
+
+      // All retries exhausted: use fallback
+      console.warn(`[digest] Summary batch failed after ${AI_MAX_RETRIES + 1} attempts, using fallback`);
+      for (const item of batch) {
+        summaries.set(item.index, { titleZh: item.title, summary: item.title, reason: '' });
+      }
     });
-    
+
     await Promise.all(promises);
     console.log(`[digest] Summary progress: ${Math.min(i + MAX_CONCURRENT_GEMINI, batches.length)}/${batches.length} batches`);
   }
-  
+
   return summaries;
 }
 
