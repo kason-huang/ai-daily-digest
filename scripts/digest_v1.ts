@@ -151,34 +151,16 @@ const RSS_FEEDS: RssFeed[] = [
 // Types
 // ============================================================================
 
-type CategoryId =
-  // 原有 6 个基础分类
-  'ai-ml' | 'security' | 'engineering' | 'tools' | 'opinion' | 'other' |
-  // 新增 8 个 ArXiv 细分领域
-  'arxiv-cl' | 'arxiv-lg' | 'arxiv-cv' | 'arxiv-ai' |
-  'arxiv-ro' | 'arxiv-sy' | 'arxiv-ne' | 'arxiv-hc';
+type CategoryId = 'ai-ml' | 'security' | 'engineering' | 'tools' | 'opinion' | 'other';
 
-export const CATEGORY_META: Record<CategoryId, { emoji: string; label: string; description: string }> = {
-  // 原有基础分类
-  'ai-ml':       { emoji: '🤖', label: 'AI / ML', description: '通用 AI 与机器学习' },
-  'security':    { emoji: '🔒', label: '安全', description: '网络安全、隐私保护' },
-  'engineering': { emoji: '⚙️', label: '工程', description: '软件工程、架构设计' },
-  'tools':       { emoji: '🛠', label: '工具 / 开源', description: '开发工具、开源项目' },
-  'opinion':     { emoji: '💡', label: '观点 / 杂谈', description: '行业观点、技术思考' },
-  'other':       { emoji: '📝', label: '其他', description: '其他领域' },
-
-  // 新增 ArXiv 细分领域
-  'arxiv-cl':    { emoji: '🗣️', label: '计算与语言 / LLM', description: 'ArXiv CS.CL: NLP、LLM、对话系统' },
-  'arxiv-lg':    { emoji: '🧠', label: '机器学习', description: 'ArXiv CS.LG: ML 理论、深度学习' },
-  'arxiv-cv':    { emoji: '👁️', label: '计算机视觉', description: 'ArXiv CS.CV: 图像、视频处理' },
-  'arxiv-ai':    { emoji: '🤖', label: '人工智能', description: 'ArXiv CS.AI: 通用 AI、知识推理' },
-  'arxiv-ro':    { emoji: '🦾', label: '机器人学', description: 'ArXiv CS.RO: 机器人、运动控制' },
-  'arxiv-sy':    { emoji: '🎛️', label: '系统与控制', description: 'ArXiv CS.SY: 控制理论、系统优化' },
-  'arxiv-ne':    { emoji: '🔮', label: '神经与进化计算', description: 'ArXiv CS.NE: 神经网络、进化算法' },
-  'arxiv-hc':    { emoji: '👤', label: '人机交互', description: 'ArXiv CS.HC: HCI、用户体验' },
+const CATEGORY_META: Record<CategoryId, { emoji: string; label: string }> = {
+  'ai-ml':       { emoji: '🤖', label: 'AI / ML' },
+  'security':    { emoji: '🔒', label: '安全' },
+  'engineering': { emoji: '⚙️', label: '工程' },
+  'tools':       { emoji: '🛠', label: '工具 / 开源' },
+  'opinion':     { emoji: '💡', label: '观点 / 杂谈' },
+  'other':       { emoji: '📝', label: '其他' },
 };
-
-export type { CategoryId };
 
 // Feed source categories for organization
 type FeedCategory = 'blog' | 'arxiv' | 'ai-lab' | 'conference' | 'research' | 'ai-media' | 'robotics';
@@ -197,18 +179,6 @@ interface Article {
   description: string;
   sourceName: string;
   sourceUrl: string;
-}
-
-// 临时类型：评分后但未总结的文章
-interface TempScoredArticle extends Article {
-  totalScore: number;
-  breakdown: {
-    relevance: number;
-    quality: number;
-    timeliness: number;
-    category: CategoryId;
-    keywords: string[];
-  };
 }
 
 interface ScoredArticle extends Article {
@@ -748,7 +718,7 @@ function buildScoringPrompt(articles: Array<{ index: number; title: string; desc
 
   return `你是一个专注于AI前沿技术的策展人，正在为一份面向AI研究者和从业者的每日摘要筛选文章。
 
-**特别关注领域：** AI模型（LLM架构、多模态、Agentic AI、智能体）、**工程实践与工具**、行业洞察、具身智能（世界模型、VLA）、**前沿研究论文**（ArXiv 最新成果）
+**特别关注领域：** AI模型（LLM架构、多模态、Agentic AI、智能体）、**工程实践与工具**、行业洞察、具身智能（世界模型、VLA）
 
 请对以下文章进行三个维度的评分（1-10 整数，10 分最高），并为每篇文章分配一个分类标签和提取 2-4 个关键词。
 
@@ -775,28 +745,12 @@ function buildScoringPrompt(articles: Array<{ index: number; title: string; desc
 - 1-3: 过时或无时效价值
 
 ## 分类标签（必须从以下选一个）
-
-### 基础分类（适用于博客文章、技术贴）
-- ai-ml: AI模型、LLM、多模态、Agentic AI、具身智能、通用机器学习
+- ai-ml: AI模型、LLM、多模态、Agentic AI、具身智能、机器学习
 - security: 安全、隐私、漏洞、加密相关
 - engineering: 软件工程、架构、编程语言、系统设计
 - tools: 开发工具、开源项目、新发布的库/框架
 - opinion: 行业观点、个人思考、职业发展、文化评论
 - other: 以上都不太适合的
-
-### ArXiv 论文分类（仅用于 ArXiv 来源的学术论文）
-- arxiv-cl: 计算与语言（CS.CL）- NLP、LLM、对话系统、机器翻译、语音识别
-- arxiv-lg: 机器学习（CS.LG）- ML 理论、深度学习、强化学习、贝叶斯方法
-- arxiv-cv: 计算机视觉（CS.CV）- 图像识别、目标检测、视频分析、3D 视觉
-- arxiv-ai: 人工智能（CS.AI）- 通用 AI、知识推理、规划、多智能体系统
-- arxiv-ro: 机器人学（CS.RO）- 机器人控制、运动规划、SLAM、操纵
-- arxiv-sy: 系统与控制（CS.SY）- 控制理论、系统优化、自动化、信号处理
-- arxiv-ne: 神经与进化计算（CS.NE）- 神经网络架构、进化算法、遗传算法
-- arxiv-hc: 人机交互（CS.HC）- HCI、用户界面、交互设计、可视化
-
-**重要提示**：
-- 如果文章来源是 ArXiv（如 "ArXiv CS.AI"、"ArXiv CS.RO"），优先使用对应的 arxiv-* 分类
-- 如果来源是博客或媒体，使用基础分类（ai-ml、security 等）
 
 ## 关键词提取
 提取 2-4 个最能代表文章主题的关键词（用英文，简短）。
@@ -841,11 +795,7 @@ async function scoreArticlesWithAI(
   
   console.log(`[digest] AI scoring: ${articles.length} articles in ${batches.length} batches`);
   
-  const validCategories = new Set<string>([
-    'ai-ml', 'security', 'engineering', 'tools', 'opinion', 'other',
-    'arxiv-cl', 'arxiv-lg', 'arxiv-cv', 'arxiv-ai',
-    'arxiv-ro', 'arxiv-sy', 'arxiv-ne', 'arxiv-hc'
-  ]);
+  const validCategories = new Set<string>(['ai-ml', 'security', 'engineering', 'tools', 'opinion', 'other']);
   
   for (let i = 0; i < batches.length; i += MAX_CONCURRENT_GEMINI) {
     const batchGroup = batches.slice(i, i + MAX_CONCURRENT_GEMINI);
@@ -1422,53 +1372,10 @@ async function main(): Promise<void> {
     };
   });
 
-  // 新逻辑：确保每个分类至少有一篇文章
-  // 1. 按分类分组，获取每个分类的最高分文章
-  const categoryGroups = new Map<CategoryId, TempScoredArticle[]>();
-  for (const article of scoredArticles) {
-    const cat = article.breakdown.category;
-    if (!categoryGroups.has(cat)) {
-      categoryGroups.set(cat, []);
-    }
-    categoryGroups.get(cat)!.push(article);
-  }
+  scoredArticles.sort((a, b) => b.totalScore - a.totalScore);
+  const topArticles = scoredArticles.slice(0, topN);
 
-  // 2. 从每个分类选取最高分的文章
-  const topByCategory: TempScoredArticle[] = [];
-  for (const [category, articles] of categoryGroups.entries()) {
-    articles.sort((a, b) => b.totalScore - a.totalScore);
-    topByCategory.push(articles[0]); // 取该分类最高分文章
-  }
-
-  // 3. 按分数排序所有文章，用于补充剩余名额
-  const allSorted = [...scoredArticles].sort((a, b) => b.totalScore - a.totalScore);
-
-  // 4. 构建最终文章列表
-  const selected = new Set<TempScoredArticle>();
-  const selectedArticles: TempScoredArticle[] = [];
-
-  // 4.1 首先添加每个分类的最高分文章
-  for (const article of topByCategory) {
-    if (selectedArticles.length < topN) {
-      selectedArticles.push(article);
-      selected.add(article);
-    }
-  }
-
-  // 4.2 如果还有名额，从剩余文章中按分数排序补充
-  if (selectedArticles.length < topN) {
-    for (const article of allSorted) {
-      if (!selected.has(article) && selectedArticles.length < topN) {
-        selectedArticles.push(article);
-        selected.add(article);
-      }
-    }
-  }
-
-  // 5. 按总分排序最终列表
-  const topArticles = selectedArticles.sort((a, b) => b.totalScore - a.totalScore);
-
-  console.log(`[digest] Top ${topN} articles selected (covered ${categoryGroups.size} categories, score range: ${topArticles[topArticles.length - 1]?.totalScore || 0} - ${topArticles[0]?.totalScore || 0})`);
+  console.log(`[digest] Top ${topN} articles selected (score range: ${topArticles[topArticles.length - 1]?.totalScore || 0} - ${topArticles[0]?.totalScore || 0})`);
 
   console.log(`[digest] Step 4/5: Generating AI summaries...`);
   const indexedTopArticles = topArticles.map((a, i) => ({ ...a, index: i }));

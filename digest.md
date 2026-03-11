@@ -1,44 +1,55 @@
-# 📰 AI 博客每日精选 — 2026-03-08
+# 📰 AI 博客每日精选 — 2026-03-10
 
-> 来自 Karpathy 推荐的 100 个顶级技术博客，AI 精选 Top 15
+> 来自 Karpathy 推荐的 110 个顶级技术博客，AI 精选 Top 25
 
 ## 📝 今日看点
 
-今日技术圈主要围绕AI生态的战略扩张与平台权力的激烈博弈展开。在AI领域，算力瓶颈引发关注，巨头们一方面通过开源扶持计划争夺开发者资源，另一方面加速向军事等敏感领域渗透。与此同时，网络安全与反垄断战火重燃，iOS神秘漏洞工具包的曝光以及Epic与Google的和解协议，凸显了科技巨头在应用分发与系统安全层面的深层较量。
+今日技术圈聚焦于具身智能的深度突破，视觉-语言-动作（VLA）模型与世界模型的结合成为主流，旨在解决人形机器人在复杂物理环境中的交互与规划难题。研究重点不仅在于通过架构创新提升模型的空间推理能力与执行效率，还致力于构建可验证的安全策略与新型基准测试，以强化智能体的鲁棒性与泛化边界。这标志着AI正加速向更符合物理规律且可控的实体智能演进。
+
+---
+
+## ⚠️ Feeds状态
+
+成功获取 107/110 个feeds，2 个失败
+
+### ❓ 其他错误 (2)
+
+- **dwarkesh.com**: HTTP 502 - Bad Gateway
+- **paulgraham.com**: Unable to connect. Is the computer able to access the url?
 
 ---
 
 ## 🏆 今日必读
 
-🥇 **Google 威胁情报小组关于 Coruna 的报告：一种来源神秘的强大 iOS 漏洞利用工具包**
+🥇 **用于人形机器人接触规划的以自我为中心视觉世界模型**
 
-[Google’s Threat Intelligence Group on Coruna, a Powerful iOS Exploit Kit of Mysterious Origin](https://cloud.google.com/blog/topics/threat-intelligence/coruna-powerful-ios-exploit-kit) — daringfireball.net · 1 天前 · 🔒 安全
+[Ego-Vision World Model for Humanoid Contact Planning](https://arxiv.org/abs/2510.11682) — ArXiv CS.SY (Control) · 11 小时前 · 🤖 AI / ML
 
-> Google 威胁情报小组披露了一个名为“Coruna”的强大 iOS 漏洞利用工具包，其来源神秘。该工具包针对运行 iOS 13.0 至 17.2.1 版本的 Apple iPhone 机型，包含 5 个完整的 iOS 漏洞利用链和总共 23 个漏洞利用。其核心价值在于全面的 iOS 漏洞利用集合，展示了针对广泛 iOS 版本的强大能力。这一发现凸显了移动操作系统面临的持续且复杂的威胁，即使是最新的版本也难以幸免。
+> 人形机器人在非结构化环境中需要利用物理接触而非单纯避障，但传统优化规划器难以处理接触复杂性，而在线强化学习样本效率低且多任务能力有限。该研究提出了一种结合学习型世界模型与基于采样的模型预测控制（MPC）的框架，利用以自我为中心的视觉数据进行训练。该方法通过世界模型预测未来状态，并利用MPC进行接触序列的优化采样，从而解决复杂的接触动力学问题。实验表明该框架能有效提升机器人在复杂环境中的自主操作能力。
 
-💡 **为什么值得读**: 深入了解针对广泛 iOS 版本的高级漏洞利用工具包细节，展示了当前移动威胁的复杂性。
+💡 **为什么值得读**: 将世界模型与MPC结合，解决了人形机器人接触规划这一长期难题，为复杂物理交互提供了新思路。
 
-🏷️ iOS, exploit, malware
+🏷️ world-model, humanoid, vision, contact-planning
 
-🥈 **AI 算力危机是否已经到来？**
+🥈 **遍历即策略：作为安全、鲁棒和高效智能体的外部化、可验证策略的日志蒸馏门控行为树**
 
-[Is the AI Compute Crunch Here?](https://martinalderson.com/posts/is-the-ai-compute-crunch-here/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=feed) — martinalderson.com · 1 天前 · 🤖 AI / ML
+[Traversal-as-Policy: Log-Distilled Gated Behavior Trees as Externalized, Verifiable Policies for Safe, Robust, and Efficient Agents](https://arxiv.org/abs/2603.05517) — ArXiv CS.AI · 11 小时前 · 🤖 AI / ML
 
-> 文章探讨了 AI 算力基础设施的潜在瓶颈，特别是随着 AI 工具采用率的快速增长。它指出 Claude Code 目前拥有 200-300 万用户，约占全球知识型工作者的 1%。作者认为，随着用户基数扩大到知识型工作者的更大部分，满足这些 AI 模型训练和推理需求的计算资源需求将变得难以管理。目前的增长轨迹表明，如果硬件和基础设施扩展不能跟上步伐，严重的算力短缺即将来临。
+> 自主大语言模型智能体常因长期策略隐含在模型权重中且安全性滞后而失败，缺乏可验证性和鲁棒性。该研究提出了“遍历即策略”方法，将沙盒执行日志蒸馏为单个可执行的门控行为树（GBT），并将树遍历而非无约束生成为控制策略。每个节点编码了挖掘出的状态条件动作宏，使策略在任务覆盖范围内可执行且显式化。这种方法将策略逻辑外部化，实现了安全、鲁棒且高效的智能体行为。
 
-💡 **为什么值得读**: 通过将用户增长与可用的算力资源联系起来，提供了关于 AI 扩展瓶颈的简短而发人深省的视角。
+💡 **为什么值得读**: 通过将LLM策略蒸馏为可验证的行为树，解决了智能体安全性和可解释性的痛点，具有很强的工程应用价值。
 
-🏷️ AI, compute, infrastructure, LLM
+🏷️ agent, safety, robust-control, verification
 
-🥉 **Tim Sweeney 签署协议放弃批评 Google Play 商店的权利直至 2032 年**
+🥉 **通过免训练注意力校准恢复VLA模型的语言对齐**
 
-[Tim Sweeney Signed Away His Right to Criticize Google’s Play Store Until 2032](https://www.theverge.com/news/889595/tim-sweeney-signed-away-his-right-to-criticize-google-until-2032) — daringfireball.net · 1 天前 · 💡 观点 / 杂谈
+[Restoring Linguistic Grounding in VLA Models via Train-Free Attention Recalibration](https://arxiv.org/abs/2603.06001) — ArXiv CS.AI · 11 小时前 · 🤖 AI / ML
 
-> 报道披露，Epic Games 首席执行官 Tim Sweeney 在与 Google 的和解协议中签署了一份具有约束力的条款书。该协议禁止 Sweeney 批评 Google 的应用分发做法、费用及其对游戏和应用的处理，直至 2032 年。他进一步放弃了起诉或倡导进一步改变 Google 应用商店政策的权利，有效地限制了他过去积极倡导的反垄断立场。这一法律和解标志着 Sweeney 在公开反对 Google 商店做法方面出现了出人意料的战略逆转。
+> 视觉-语言-动作（VLA）模型在处理分布外（OOD）指令时存在关键缺陷，即当语言指令与视觉场景冲突时，模型仍会继续执行视觉上看似合理的动作而忽略指令。该研究揭示了这一故障模式，并提出了一种无需重新训练的注意力校准方法。该方法通过在推理过程中调整注意力权重，强制模型重新关注语言指令，从而恢复语言对齐能力。实验证明该方法能有效提升VLA模型在OOD场景下的可靠性和安全性。
 
-💡 **为什么值得读**: 揭示了 Epic 与 Google 法律战中的惊人转折，即 Sweeney 用其批评权换取了和解。
+💡 **为什么值得读**: 指出了VLA模型在OOD指令下的致命盲点，并提供了一种无需重新训练即可修复的实用方法，对提升机器人安全至关重要。
 
-🏷️ Google, legal, settlement
+🏷️ VLA, robotics, manipulation, OOD
 
 ---
 
@@ -46,19 +57,14 @@
 
 | 扫描源 | 抓取文章 | 时间范围 | 精选 |
 |:---:|:---:|:---:|:---:|
-| 78/100 | 3198 篇 → 27 篇 | 48h | **15 篇** |
+| 107/110 | 5613 篇 → 2138 篇 | 48h | **25 篇** |
 
 ### 分类分布
 
 ```mermaid
 pie showData
     title "文章分类分布"
-    "💡 观点 / 杂谈" : 5
-    "⚙️ 工程" : 4
-    "🤖 AI / ML" : 2
-    "🛠 工具 / 开源" : 2
-    "🔒 安全" : 1
-    "📝 其他" : 1
+    "🤖 AI / ML" : 25
 ```
 
 ### 高频关键词
@@ -66,197 +72,287 @@ pie showData
 ```mermaid
 xychart-beta horizontal
     title "高频关键词"
-    x-axis ["ai", "google", "anthropic", "ios", "exploit", "malware", "compute", "infrastructure", "llm", "legal", "settlement", "claude"]
-    y-axis "出现次数" 0 --> 5
-    bar [3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    x-axis ["world-model", "robotics", "agent", "vla", "llm", "rl", "manipulation", "simulation", "humanoid", "video-prediction", "vlm", "diffusion"]
+    y-axis "出现次数" 0 --> 15
+    bar [13, 9, 6, 6, 4, 4, 3, 3, 2, 2, 2, 2]
 ```
 
 <details>
 <summary>📈 纯文本关键词图（终端友好）</summary>
 
 ```
-ai             │ ████████████████████ 3
-google         │ █████████████░░░░░░░ 2
-anthropic      │ █████████████░░░░░░░ 2
-ios            │ ███████░░░░░░░░░░░░░ 1
-exploit        │ ███████░░░░░░░░░░░░░ 1
-malware        │ ███████░░░░░░░░░░░░░ 1
-compute        │ ███████░░░░░░░░░░░░░ 1
-infrastructure │ ███████░░░░░░░░░░░░░ 1
-llm            │ ███████░░░░░░░░░░░░░ 1
-legal          │ ███████░░░░░░░░░░░░░ 1
+world-model      │ ████████████████████ 13
+robotics         │ ██████████████░░░░░░ 9
+agent            │ █████████░░░░░░░░░░░ 6
+vla              │ █████████░░░░░░░░░░░ 6
+llm              │ ██████░░░░░░░░░░░░░░ 4
+rl               │ ██████░░░░░░░░░░░░░░ 4
+manipulation     │ █████░░░░░░░░░░░░░░░ 3
+simulation       │ █████░░░░░░░░░░░░░░░ 3
+humanoid         │ ███░░░░░░░░░░░░░░░░░ 2
+video-prediction │ ███░░░░░░░░░░░░░░░░░ 2
 ```
 
 </details>
 
 ### 🏷️ 话题标签
 
-**ai**(3) · **google**(2) · **anthropic**(2) · ios(1) · exploit(1) · malware(1) · compute(1) · infrastructure(1) · llm(1) · legal(1) · settlement(1) · claude(1) · opensource(1) · pentagon(1) · defense(1) · epic(1) · antitrust(1) · package manager(1) · devtools(1) · software(1)
-
----
-
-## 💡 观点 / 杂谈
-
-### 1. Tim Sweeney 签署协议放弃批评 Google Play 商店的权利直至 2032 年
-
-[Tim Sweeney Signed Away His Right to Criticize Google’s Play Store Until 2032](https://www.theverge.com/news/889595/tim-sweeney-signed-away-his-right-to-criticize-google-until-2032) — **daringfireball.net** · 1 天前 · ⭐ 25/30
-
-> 报道披露，Epic Games 首席执行官 Tim Sweeney 在与 Google 的和解协议中签署了一份具有约束力的条款书。该协议禁止 Sweeney 批评 Google 的应用分发做法、费用及其对游戏和应用的处理，直至 2032 年。他进一步放弃了起诉或倡导进一步改变 Google 应用商店政策的权利，有效地限制了他过去积极倡导的反垄断立场。这一法律和解标志着 Sweeney 在公开反对 Google 商店做法方面出现了出人意料的战略逆转。
-
-🏷️ Google, legal, settlement
-
----
-
-### 2. Anthropic 与五角大楼
-
-[Anthropic and the Pentagon](https://simonwillison.net/2026/Mar/6/anthropic-and-the-pentagon/#atom-everything) — **simonwillison.net** · 1 天前 · ⭐ 24/30
-
-> 文章分析了近期五角大楼与 OpenAI 及 Anthropic 合同的背景，并引用了 Bruce Schneier 和 Nathan E. Sanders 的观点。它认为顶级 AI 模型正日益商品化，性能相似且差异化很小，这可能推动供应商寻求军事合同。报道提供了对涉及国家安全和 AI 技术供应商的伦理、战略和商业影响的最接地气的分析。作者断言，五角大楼的参与标志着 AI 商业格局的转变，即技术差异已不足以阻止与国防部门的合作。
-
-🏷️ Anthropic, Pentagon, defense
-
----
-
-### 3. The Verge 采访 Tim Sweeney：在“Epic 诉 Google”案胜诉之后
-
-[The Verge Interviews Tim Sweeney After Victory in ‘Epic v. Google’](https://www.theverge.com/23996474/epic-tim-sweeney-interview-win-google-antitrust-lawsuit-district-court) — **daringfireball.net** · 1 天前 · ⭐ 24/30
-
-> The Verge 采访了 Epic Games 首席执行官 Tim Sweeney，讨论了他在针对 Google 的反垄断诉讼中的胜利以及与针对 Apple 的案件相比的差异。Sweeney 将 Apple 描述为“冰”，指出其反垄断行为是内部的，利用其商店和支付系统对开发者和运营商施加统一条款。相比之下，他将 Google 描述为“火”，指出他们积极向游戏开发者付款并建立合作伙伴关系以维持 Android 的主导地位。Sweeney 的见解揭示了这两家科技巨头在维持其应用生态系统垄断地位方面所采取的不同策略。
-
-🏷️ Epic, Google, antitrust
-
----
-
-### 4. 多元化观点：有了 RSS，网络还可以忍受（2026 年 3 月 7 日）
-
-[Pluralistic: The web is bearable with RSS (07 Mar 2026)](https://pluralistic.net/2026/03/07/reader-mode/) — **pluralistic.net** · 18 小时前 · ⭐ 21/30
-
-> Cory Doctorow 的最新文章主张使用 RSS 和“阅读器模式”作为应对现代网络混乱的工具。他强调这些技术允许用户过滤掉广告、追踪器和干扰，使内容消费再次变得可以忍受。文章包含各种有趣的链接，涵盖物体恒存性、媒体谎言和政治活动资金等话题，展示策展内容的广度。Doctorow 重申，开放协议如 RSS 对于维护用户自主权和抵御大型科技平台的封闭花园至关重要。
-
-🏷️ RSS, web, open web
-
----
-
-### 5. 使用 Clankers 帮我度过手术恢复期
-
-[Using Clankers to Help Me Process Surgery](https://xeiaso.net/blog/2026/surgery-recovery-clankers/) — **xeiaso.net** · 1 天前 · ⭐ 20/30
-
-> 一篇个人叙事，描述了作者在手术恢复期间使用机械或数字实体寻求慰藉。作者提到了“Clankers”（可能指机械装置或特定的 AI/机器人实体），在凌晨 4 点的恢复期间提供了陪伴。文章强调了在脆弱时期，这些从不睡觉的机器所带来的持续、无判断的陪伴所带来的情感价值。这段经历展示了人类与机器之间独特的联系，机器在人类休息时提供稳定性和存在感。
-
-🏷️ AI, personal, health
-
----
-
-## ⚙️ 工程
-
-### 6. 当 ReadDirectoryChangesW 报告删除事件时，如何获取被删除对象的更多信息？
-
-[When Read­Directory­ChangesW reports that a deletion occurred, how can I learn more about the deleted thing?](https://devblogs.microsoft.com/oldnewthing/20260306-00/?p=112116) — **devblogs.microsoft.com/oldnewthing** · 1 天前 · ⭐ 22/30
-
-> 文章解决了一个常见的 Windows 编程问题：如何在收到 `ReadDirectoryChangesW` 删除通知后检索有关已删除文件的信息。作者解释说，当 API 报告删除操作时，文件系统对象已经被移除，因此通过标准方法查询其属性已不可能。解决方案涉及主动监控；应用程序必须在删除发生前维护文件元数据的缓存或内存记录。这种技术限制意味着开发者必须预先构建状态跟踪，而不是依赖删除后的事件数据。
-
-🏷️ Windows, API, filesystem
-
----
-
-### 7. 开源基金会联盟宣布成立七个新工作组
-
-[Announcing New Working Groups](https://nesbitt.io/2026/03/07/announcing-new-working-groups.html) — **nesbitt.io** · 1 天前 · ⭐ 20/30
-
-> 开源基金会联盟宣布成立七个新的工作组，旨在应对开源生态系统中的关键挑战。这些工作组将聚焦于特定的技术领域或治理议题，通过促进成员间的协作来加速关键基础设施的发展。这一举措标志着开源社区在统一标准和资源整合方面迈出了重要一步。
-
-🏷️ open-source, governance, consortium
-
----
-
-### 8. 引用 Ally Piechowski：如何审计遗留的 Rails 代码库
-
-[Quoting Ally Piechowski](https://simonwillison.net/2026/Mar/6/ally-piechowski/#atom-everything) — **simonwillison.net** · 1 天前 · ⭐ 19/30
-
-> 文章引用了 Ally Piechowski 的观点，分享了在审计遗留 Rails 代码库时向开发团队和管理层提出的关键问题。针对开发人员，核心问题包括最不敢触碰的代码区域、上次周五部署的时间以及过去 90 天内测试未捕获的生产环境故障。对于 CTO 或工程经理，询问的重点则是受阻超过一年的功能以及是否具备实时的错误监控能力。这些问题直指技术债务和团队流程的痛点，有助于快速评估代码库的健康状况和团队效能。
-
-🏷️ Rails, audit, legacy-code
-
----
-
-### 9. PTP 挂钟既不切实际又过于精确
-
-[A PTP Wall Clock is impractical and a little too precise](https://www.jeffgeerling.com/blog/2026/ptp-wall-clock-impractical-too-precise/) — **jeffgeerling.com** · 1 天前 · ⭐ 18/30
-
-> 作者受 Oliver Ettlin 的演讲启发，尝试复现并测试 PTP（精确时间协议）挂钟的实际应用效果。虽然 PTP 协议能提供纳秒级的高精度时间同步，但作者发现将其用于物理挂钟既不切实际也过于精确。在日常使用场景中，这种极高的精度无法被肉眼察觉，且增加了不必要的系统复杂性。作者得出结论，PTP 时钟更适合作为网络同步技术的演示，而非实用的计时工具。
-
-🏷️ PTP, time-sync, hardware
+**world-model**(13) · **robotics**(9) · **agent**(6) · vla(6) · llm(4) · rl(4) · manipulation(3) · simulation(3) · humanoid(2) · video-prediction(2) · vlm(2) · diffusion(2) · memory(2) · video-generation(2) · rag(2) · vision(1) · contact-planning(1) · safety(1) · robust-control(1) · verification(1)
 
 ---
 
 ## 🤖 AI / ML
 
-### 10. AI 算力危机是否已经到来？
+### 1. 用于人形机器人接触规划的以自我为中心视觉世界模型
 
-[Is the AI Compute Crunch Here?](https://martinalderson.com/posts/is-the-ai-compute-crunch-here/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=feed) — **martinalderson.com** · 1 天前 · ⭐ 26/30
+[Ego-Vision World Model for Humanoid Contact Planning](https://arxiv.org/abs/2510.11682) — **ArXiv CS.SY (Control)** · 11 小时前 · ⭐ 30/30
 
-> 文章探讨了 AI 算力基础设施的潜在瓶颈，特别是随着 AI 工具采用率的快速增长。它指出 Claude Code 目前拥有 200-300 万用户，约占全球知识型工作者的 1%。作者认为，随着用户基数扩大到知识型工作者的更大部分，满足这些 AI 模型训练和推理需求的计算资源需求将变得难以管理。目前的增长轨迹表明，如果硬件和基础设施扩展不能跟上步伐，严重的算力短缺即将来临。
+> 人形机器人在非结构化环境中需要利用物理接触而非单纯避障，但传统优化规划器难以处理接触复杂性，而在线强化学习样本效率低且多任务能力有限。该研究提出了一种结合学习型世界模型与基于采样的模型预测控制（MPC）的框架，利用以自我为中心的视觉数据进行训练。该方法通过世界模型预测未来状态，并利用MPC进行接触序列的优化采样，从而解决复杂的接触动力学问题。实验表明该框架能有效提升机器人在复杂环境中的自主操作能力。
 
-🏷️ AI, compute, infrastructure, LLM
-
----
-
-### 11. 面向开源项目的 Codex 计划
-
-[Codex for Open Source](https://simonwillison.net/2026/Mar/7/codex-for-open-source/#atom-everything) — **simonwillison.net** · 18 小时前 · ⭐ 24/30
-
-> 文章讨论了 OpenAI 和 Anthropic 针对热门开源项目维护者的新竞争性福利。继 Anthropic 为符合条件的开源项目维护者提供 6 个月免费 Claude Max 访问权限之后，OpenAI 推出了类似的“Codex for Open Source”优惠。OpenAI 的计划提供 6 个月的 ChatGPT Pro（每月 200 美元），其中包括 Codex 访问权限，适用于拥有 5,000+ stars 或 100 万+ NPM 下载量的项目。这一举措突显了主要 AI 公司在争夺开发者心智份额和将 AI 工具集成到开源工作流方面的激烈竞争。
-
-🏷️ Claude, OpenSource, Anthropic
+🏷️ world-model, humanoid, vision, contact-planning
 
 ---
 
-## 🛠 工具 / 开源
+### 2. 遍历即策略：作为安全、鲁棒和高效智能体的外部化、可验证策略的日志蒸馏门控行为树
 
-### 12. 如果它像包管理器那样叫唤
+[Traversal-as-Policy: Log-Distilled Gated Behavior Trees as Externalized, Verifiable Policies for Safe, Robust, and Efficient Agents](https://arxiv.org/abs/2603.05517) — **ArXiv CS.AI** · 11 小时前 · ⭐ 29/30
 
-[If It Quacks Like a Package Manager](https://nesbitt.io/2026/03/08/if-it-quacks-like-a-package-manager.html) — **nesbitt.io** · 2 小时前 · ⭐ 23/30
+> 自主大语言模型智能体常因长期策略隐含在模型权重中且安全性滞后而失败，缺乏可验证性和鲁棒性。该研究提出了“遍历即策略”方法，将沙盒执行日志蒸馏为单个可执行的门控行为树（GBT），并将树遍历而非无约束生成为控制策略。每个节点编码了挖掘出的状态条件动作宏，使策略在任务覆盖范围内可执行且显式化。这种方法将策略逻辑外部化，实现了安全、鲁棒且高效的智能体行为。
 
-> 文章批评了那些模仿包管理器行为但缺乏必要功能或可靠性的开发工具。作者将这些工具描述为“像包管理器一样摇摇摆摆”，暗示它们拥有包管理器的外观和感觉。然而，它们未能“学会游泳”，表明它们缺乏处理依赖管理、版本控制或安全性等核心任务的基本能力。这篇文章是对半成品工具的警告，敦促开发者坚持使用成熟、功能齐全的包管理解决方案。
-
-🏷️ package manager, devtools, software
+🏷️ agent, safety, robust-control, verification
 
 ---
 
-### 13. ‘npx workos’：利用 AI Agent 自动集成认证功能
+### 3. 通过免训练注意力校准恢复VLA模型的语言对齐
 
-[‘npx workos’](https://workos.com/docs/authkit/cli-installer?utm_source=tldrdev&amp;utm_medium=newsletter&amp;utm_campaign=q12026) — **daringfireball.net** · 13 小时前 · ⭐ 18/30
+[Restoring Linguistic Grounding in VLA Models via Train-Free Attention Recalibration](https://arxiv.org/abs/2603.06001) — **ArXiv CS.AI** · 11 小时前 · ⭐ 29/30
 
-> WorkOS 发布了一款名为 `npx workos` 的 CLI 工具，利用 AI Agent 为现有代码库自动编写认证集成方案。该工具基于 Claude 模型，能够读取项目代码、识别框架并生成适配的集成代码，而非简单的模板生成。系统还会自动进行类型检查和构建，将错误反馈给 AI 自我修复以确保代码质量。这为开发者提供了一种通过 AI 自动化解决繁琐 SDK 集成问题的高效方案。
+> 视觉-语言-动作（VLA）模型在处理分布外（OOD）指令时存在关键缺陷，即当语言指令与视觉场景冲突时，模型仍会继续执行视觉上看似合理的动作而忽略指令。该研究揭示了这一故障模式，并提出了一种无需重新训练的注意力校准方法。该方法通过在推理过程中调整注意力权重，强制模型重新关注语言指令，从而恢复语言对齐能力。实验证明该方法能有效提升VLA模型在OOD场景下的可靠性和安全性。
 
-🏷️ CLI, auth, AI-agent
-
----
-
-## 🔒 安全
-
-### 14. Google 威胁情报小组关于 Coruna 的报告：一种来源神秘的强大 iOS 漏洞利用工具包
-
-[Google’s Threat Intelligence Group on Coruna, a Powerful iOS Exploit Kit of Mysterious Origin](https://cloud.google.com/blog/topics/threat-intelligence/coruna-powerful-ios-exploit-kit) — **daringfireball.net** · 1 天前 · ⭐ 28/30
-
-> Google 威胁情报小组披露了一个名为“Coruna”的强大 iOS 漏洞利用工具包，其来源神秘。该工具包针对运行 iOS 13.0 至 17.2.1 版本的 Apple iPhone 机型，包含 5 个完整的 iOS 漏洞利用链和总共 23 个漏洞利用。其核心价值在于全面的 iOS 漏洞利用集合，展示了针对广泛 iOS 版本的强大能力。这一发现凸显了移动操作系统面临的持续且复杂的威胁，即使是最新的版本也难以幸免。
-
-🏷️ iOS, exploit, malware
+🏷️ VLA, robotics, manipulation, OOD
 
 ---
 
-## 📝 其他
+### 4. AtomVLA：通过预测性潜在世界模型实现可扩展的机器人操作后训练
 
-### 15. 阅读清单：数据中心脱网、太阳能光伏效率记录及其他
+[AtomVLA: Scalable Post-Training for Robotic Manipulation via Predictive Latent World Models](https://arxiv.org/abs/2603.08519) — **ArXiv CS.RO (Robotics)** · 11 小时前 · ⭐ 29/30
 
-[Reading List 03/07/2026](https://www.construction-physics.com/p/reading-list-03072026) — **construction-physics.com** · 23 小时前 · ⭐ 19/30
+> 现有的视觉-语言-动作（VLA）模型在监督微调中主要依赖粗粒度的高级任务指令，导致缺乏明确的中间步骤，难以执行复杂的多步操作。该研究提出了AtomVLA，利用预测性潜在世界模型进行可扩展的后训练，以填补指令对齐的差距。该方法通过世界模型预测中间状态，增强了模型对指令细节的理解和执行能力。结果表明，AtomVLA显著提升了VLA模型在复杂机器人操作任务中的表现。
 
-> 本期阅读清单涵盖了数据中心能源管理、太阳能技术进展、战略石油储备维修以及电动汽车行业动态等多个领域的新闻。文章讨论了数据中心脱离电网运行的趋势以及太阳能光伏效率的最新记录，同时分析了福特在电动汽车战略上的失误。此外，清单还提到了前 OpenAI CTO 创立新公司的动向。这些内容为关注能源、建筑和科技行业的读者提供了广泛的视野和最新的行业洞察。
-
-🏷️ data-centers, energy, AI
+🏷️ VLA, world-model, manipulation, post-training
 
 ---
 
-*生成于 2026-03-08 12:29 | 扫描 78 源 → 获取 3198 篇 → 精选 15 篇*
+### 5. 用于机器人策略训练和评估的交互式世界模拟器
+
+[Interactive World Simulator for Robot Policy Training and Evaluation](https://arxiv.org/abs/2603.08546) — **ArXiv CS.RO (Robotics)** · 11 小时前 · ⭐ 29/30
+
+> 现有的动作条件视频预测模型（世界模型）通常速度较慢，且难以捕捉长视野下的物理一致性交互，限制了其在机器人策略训练和评估中的实用性。该研究提出了交互式世界模拟器，这是一个从中等规模机器人交互数据集构建交互式世界模型的框架。该框架通过交互式生成机制，解决了长视野物理一致性问题，同时保证了生成速度。这使得在模拟环境中高效地训练和评估机器人策略成为可能。
+
+🏷️ world-model, simulation, video-prediction, robotics
+
+---
+
+### 6. MetaWorld-X：通过VLM编排专家实现人形机器人移动操作的分层世界建模
+
+[MetaWorld-X: Hierarchical World Modeling via VLM-Orchestrated Experts for Humanoid Loco-Manipulation](https://arxiv.org/abs/2603.08572) — **ArXiv CS.RO (Robotics)** · 11 小时前 · ⭐ 29/30
+
+> 现有的强化学习方法常依赖单一策略来获取多技能，导致高自由度人形机器人在移动操作中出现跨技能梯度干扰和运动模式冲突。该研究提出了MetaWorld-X，一种通过视觉语言模型（VLM）编排专家的分层世界建模框架。VLM负责协调不同的专家模块，分别处理特定的子任务，从而避免策略间的冲突。该方法实现了自然、稳定且具有组合泛化能力的全身控制，显著提升了人形机器人的操作能力。
+
+🏷️ world-model, humanoid, VLM, loco-manipulation
+
+---
+
+### 7. RetoVLA：在视觉-语言-动作模型中复用寄存器令牌进行空间推理
+
+[RetoVLA: Reusing Register Tokens for Spatial Reasoning in Vision-Language-Action Models](https://arxiv.org/abs/2509.21243) — **ArXiv CS.RO (Robotics)** · 11 小时前 · ⭐ 29/30
+
+> 视觉-语言-动作（VLA）模型虽然性能强大，但其高昂的内存和计算成本限制了实时部署，且现有的模型压缩技术往往牺牲了3D空间推理能力。该研究提出了RetoVLA架构，旨在轻量级模型中保持空间感知能力。通过复用寄存器令牌进行空间推理，RetoVLA在减少参数和计算量的同时，保留了关键的场景布局理解能力。实验表明，该方法在保持高性能的同时显著降低了部署门槛。
+
+🏷️ VLA, multimodal, efficiency, robotics
+
+---
+
+### 8. SR-TTT：感知惊奇的残差测试时训练
+
+[SR-TTT: Surprisal-Aware Residual Test-Time Training](https://arxiv.org/abs/2603.06642) — **ArXiv CS.LG (ML)** · 11 小时前 · ⭐ 29/30
+
+> 测试时训练（TTT）语言模型通过快速权重替代KV-cache实现了O(1)内存 footprint，但在“大海捞针”等精确回忆任务上会因过度压缩上下文而失败。该研究提出了SR-TTT，一种感知惊奇的残差测试时训练方法。该方法通过计算惊奇度来决定何时保留原始上下文信息，并引入残差连接以防止信息丢失。SR-TTT成功结合了TTT的长上下文优势与标准注意力的精确回忆能力。
+
+🏷️ TTT, LLM, context-window, test-time-training
+
+---
+
+### 9. $OneMillion-Bench：语言智能体距离人类专家还有多远？
+
+[\$OneMillion-Bench: How Far are Language Agents from Human Experts?](https://arxiv.org/abs/2603.07980) — **ArXiv CS.LG (ML)** · 11 小时前 · ⭐ 29/30
+
+> 现有的基准测试多局限于结构化或考试风格的任务，无法满足评估现实世界中具备多步推理和工具使用能力的语言智能体的需求。该研究推出了$OneMillion-Bench，一个包含400个专家策划任务的基准测试，涵盖法律、金融、工业、医疗和自然科学领域。该基准旨在模拟真实的专业工作环境，全面评估智能体的长周期任务处理能力。结果揭示了当前语言智能体与人类专家在实际应用中的显著差距。
+
+🏷️ agent, benchmark, LLM, evaluation
+
+---
+
+### 10. 论多模态大语言模型在空间智能方面的泛化能力
+
+[On the Generalization Capacities of MLLMs for Spatial Intelligence](https://arxiv.org/abs/2603.06704) — **ArXiv CS.LG (ML)** · 11 小时前 · ⭐ 29/30
+
+> 直接处理RGB输入的多模态大语言模型（MLLMs）在3D定位和导航等任务上显示出潜力，但其在跨相机泛化方面存在根本性缺陷。该研究指出，忽略相机参数会导致物体的物理属性与相机视角纠缠，造成无法解决的歧义。实验证明，这导致MLLMs过度拟合特定视角，无法在新的相机设置下进行有效的空间推理。结论认为，真正的空间智能必须考虑相机参数，仅依赖RGB输入的方法存在局限性。
+
+🏷️ MLLM, navigation, spatial-intelligence, 3D-localization
+
+---
+
+### 11. DreamSAC：通过对称性探索学习哈密顿世界模型
+
+[DreamSAC: Learning Hamiltonian World Models via Symmetry Exploration](https://arxiv.org/abs/2603.07545) — **ArXiv CS.LG (ML)** · 11 小时前 · ⭐ 29/30
+
+> 学习型世界模型在插值泛化上表现出色，但在针对新物理特性的外推泛化上往往失败，因为它们学习的是统计相关性而非底层的生成规则。文章提出学习物理不变性和守恒定律是实现稳健外推的关键，并引入了“对称性探索”机制。该方法通过发现环境中的对称性来构建遵循哈密顿动力学的世界模型。实验表明，DreamSAC 能够更好地捕捉物理规律，显著提升了模型在未见过的物理环境中的泛化能力。这一方法为解决世界模型物理一致性差的问题提供了新的数学基础。
+
+🏷️ world-model, Hamiltonian, RL, symmetry
+
+---
+
+### 12. 用于在线强化学习的演进扩散与流匹配策略
+
+[Evolving Diffusion and Flow Matching Policies for Online Reinforcement Learning](https://arxiv.org/abs/2512.02581) — **ArXiv CS.LG (ML)** · 11 小时前 · ⭐ 29/30
+
+> 扩散和流匹配策略能够提供富有表现力和多模态的动作建模，但在在线强化学习中经常不稳定，这是由于难以处理的似然度和通过长采样链传播的梯度造成的。相比之下，高斯参数化虽然易于优化，却缺乏复杂控制所需的表现力，导致优化稳定性与表达能力之间存在持续的张力。文章提出了一种演进策略，旨在解决这一两难问题，通过动态调整模型参数来平衡稳定性和表达能力。该方法试图在不牺牲多模态表达能力的前提下，提高在线学习的稳定性。实验结果显示，该方法在保持高性能动作生成的同时，显著提升了训练过程的收敛性和鲁棒性。
+
+🏷️ diffusion, RL, robotics, flow-matching
+
+---
+
+### 13. MEM：视觉语言动作模型的多尺度具身记忆
+
+[MEM: Multi-Scale Embodied Memory for Vision Language Action Models](https://arxiv.org/abs/2603.03596) — **ArXiv CS.LG (ML)** · 11 小时前 · ⭐ 29/30
+
+> 传统的端到端机器人学习通常将过去的观察序列直接输入策略，但在复杂的多阶段现实任务中，机器人需要表示不同粒度的过去事件。文章指出记忆机制应涵盖从捕捉抽象语义概念的长期记忆（如记住烹饪进度）到关注即时细节的短期记忆。为此，研究者提出了 MEM（多尺度具身记忆）框架，以适应不同时间尺度的信息存储与检索。该架构能够更有效地处理长视程任务中的状态依赖问题。通过在具身智能任务中的验证，MEM 显著提升了机器人在复杂环境下的任务执行成功率。
+
+🏷️ VLA, embodied-ai, robotics, memory
+
+---
+
+### 14. LiveWorld：在生成视频世界模型中模拟视野外的动态变化
+
+[LiveWorld: Simulating Out-of-Sight Dynamics in Generative Video World Models](https://arxiv.org/abs/2603.07145) — **ArXiv CS.CV (Vision)** · 11 小时前 · ⭐ 29/30
+
+> 现有的生成视频世界模型虽然能模拟视觉环境的演变，但隐含假设世界仅在观察者的视野内进化，导致离开视野的物体状态被“冻结”，再次访问时无法反映期间发生的事件。为了解决这一局限，文章提出了 LiveWorld 框架，旨在模拟视野外的动态变化。该模型能够推理和生成观察者未直接看到的区域的状态更新，从而保证场景的全局一致性。实验证明，LiveWorld 在交互式场景探索中能提供更真实的物理模拟。这一突破对于构建可信的沉浸式环境至关重要。
+
+🏷️ world-model, generative-video, simulation
+
+---
+
+### 15. DreamSAC：通过对称性探索学习哈密顿世界模型
+
+[DreamSAC: Learning Hamiltonian World Models via Symmetry Exploration](https://arxiv.org/abs/2603.07545) — **ArXiv CS.CV (Vision)** · 11 小时前 · ⭐ 29/30
+
+> 学习型世界模型擅长插值泛化，但在针对新物理特性的外推泛化上存在缺陷，主要归因于其学习统计相关性而非物理不变性和守恒定律等底层生成规则。文章提出学习这些不变性是实现稳健外推的关键，并引入了“对称性探索”机制。该方法通过探索环境对称性来构建遵循哈密顿动力学的世界模型，从而更好地捕捉物理规律。实验结果表明，DreamSAC 在未见过的物理环境中显著提升了泛化性能。这为计算机视觉和机器人学中的世界模型构建提供了新的物理约束视角。
+
+🏷️ world-model, RL, physics
+
+---
+
+### 16. SAMoE-VLA：面向自动驾驶的场景自适应混合专家视觉语言动作模型
+
+[SAMoE-VLA: A Scene Adaptive Mixture-of-Experts Vision-Language-Action Model for Autonomous Driving](https://arxiv.org/abs/2603.08113) — **ArXiv CS.CV (Vision)** · 11 小时前 · ⭐ 29/30
+
+> 视觉语言动作模型在自动驾驶领域展现出潜力，但经验分析表明，直接将继承自大语言模型的 Token 级混合专家机制应用于 VLA 模型，会导致性能不稳定和安全性下降。文章指出现有的 MoE 机制与自动驾驶场景的需求存在不匹配，并提出了 SAMoE-VLA 框架。该模型采用场景自适应的专家选择策略，旨在平衡模型的表达能力与推理稳定性。实验结果显示，SAMoE-VLA 在保证计算效率的同时，显著提升了自动驾驶决策的安全性和鲁棒性。
+
+🏷️ VLA, autonomous-driving, MoE, robotics
+
+---
+
+### 17. ΔVLA：通过世界知识变化先验引导的视觉语言动作模型
+
+[$\Delta$VLA: Prior-Guided Vision-Language-Action Models via World Knowledge Variation](https://arxiv.org/abs/2603.08361) — **ArXiv CS.CV (Vision)** · 11 小时前 · ⭐ 29/30
+
+> 现有的视觉语言动作模型通常采用预测范式，通过建模未来的视觉状态或世界知识来引导动作生成，但这往往侧重于预测结果而非推理变化过程。文章强调对底层变化过程的推理对于确定如何执行动作至关重要，并提出了 ΔVLA 模型。该模型利用世界知识的变化作为先验引导，专注于推理状态之间的转换过程。这种方法弥补了传统 VLA 模型在动态过程理解上的不足。实验表明，ΔVLA 在复杂的机器人操作任务中表现出更强的推理能力和操作精度。
+
+🏷️ VLA, robotics, manipulation, world-model
+
+---
+
+### 18. SPIRAL：基于反思规划智能体的自改进动作世界模型闭环框架
+
+[SPIRAL: A Closed-Loop Framework for Self-Improving Action World Models via Reflective Planning Agents](https://arxiv.org/abs/2603.08403) — **ArXiv CS.CV (Vision)** · 11 小时前 · ⭐ 29/30
+
+> 现有的一次性视频生成模型采用开环方式，常导致动作执行不完整、语义基础薄弱和时间漂移问题。文章提出了 SPIRAL，这是一个自改进的规划和迭代反思动作世界建模闭环框架。SPIRAL 将动作世界模型构建为“思考-行动-反思”的过程，能够根据高级语义动作生成可控的长视程视频。该框架通过反思机制不断修正生成的视频内容，确保动作序列与语义意图的一致性。实验证明，SPIRAL 在长视频生成的连贯性和语义准确性上优于现有开环方法。
+
+🏷️ world-model, agent, self-improving, video-generation
+
+---
+
+### 19. 用于机器人策略训练与评估的交互式世界模拟器
+
+[Interactive World Simulator for Robot Policy Training and Evaluation](https://arxiv.org/abs/2603.08546) — **ArXiv CS.CV (Vision)** · 11 小时前 · ⭐ 29/30
+
+> 动作条件视频预测模型（世界模型）在机器人应用中潜力巨大，但现有方法通常速度较慢，且难以在长视程内捕捉物理一致的交互。文章提出了交互式世界模拟器，这是一个从中等规模机器人数据集构建交互式世界模型的框架。该框架旨在生成快速且物理一致的模拟环境，以支持大规模机器人策略的训练与评估。通过优化生成速度和物理准确性，该模拟器显著缩短了策略训练周期。结果表明，其生成的环境质量足以训练出高效的机器人策略。
+
+🏷️ world-model, robotics, simulation, video-prediction
+
+---
+
+### 20. Vid2World：将视频扩散模型打造为交互式世界模型
+
+[Vid2World: Crafting Video Diffusion Models to Interactive World Models](https://arxiv.org/abs/2505.14357) — **ArXiv CS.CV (Vision)** · 11 小时前 · ⭐ 29/30
+
+> 现有的世界模型通常需要大量特定领域的训练，且生成的预测保真度低、粗糙，限制了其在复杂环境中的应用。相比之下，在大规模互联网数据上训练的视频扩散模型已展现出卓越的视觉质量。文章提出了 Vid2World，旨在将视频扩散模型转化为交互式世界模型，以利用其高质量的生成能力。该方法通过微调和适配，使模型能够根据动作输入预测未来状态，同时保持高保真度。实验表明，Vid2World 在视觉质量和交互预测能力上均优于传统世界模型。
+
+🏷️ world-model, diffusion, video-generation, sequential-decision
+
+---
+
+### 21. 从像素到谓词：通过预训练视觉-语言模型学习符号化世界模型
+
+[From Pixels to Predicates: Learning Symbolic World Models via Pretrained Vision-Language Models](https://arxiv.org/abs/2501.00296) — **ArXiv CS.CV (Vision)** · 11 小时前 · ⭐ 29/30
+
+> 核心问题在于如何利用低级技能和少量图像演示，在复杂机器人领域解决长视界决策问题。提出了一种利用预训练视觉-语言模型（VLM）从像素中学习抽象符号化世界模型的方法。该模型通过提取定义属性和关系的符号谓词集，支持通过规划实现对新颖目标的零样本泛型。实验表明，这种符号化世界模型能够有效提升机器人在未见任务中的规划效率和泛化能力。
+
+🏷️ world-model, robotics, VLM, symbolic-ai
+
+---
+
+### 22. SoK: 代理式检索增强生成（RAG）：分类、架构、评估与研究方向
+
+[SoK: Agentic Retrieval-Augmented Generation (RAG): Taxonomy, Architectures, Evaluation, and Research Directions](https://arxiv.org/abs/2603.07379) — **ArXiv CS.CL (LLM/NLP)** · 11 小时前 · ⭐ 29/30
+
+> 当前 RAG 系统正演变为代理式架构，但缺乏作为序列决策系统的系统性理解，导致架构碎片化和评估方法不一致。这是一篇系统性综述，对代理式 RAG 进行了分类，梳理了其架构设计、评估基准及未来研究方向。文章重点分析了大语言模型如何自主协调多步推理、动态内存管理和迭代检索策略。该综述旨在建立统一的理论框架，推动代理式 RAG 在工业应用和学术研究中的标准化发展。
+
+🏷️ agent, RAG, taxonomy, LLM
+
+---
+
+### 23. PonderLM-2：在连续空间中利用潜在思维预训练大语言模型
+
+[PonderLM-2: Pretraining LLM with Latent Thoughts in Continuous Space](https://arxiv.org/abs/2509.23184) — **ArXiv CS.CL (LLM/NLP)** · 11 小时前 · ⭐ 29/30
+
+> 受测试时思维链通过扩展步骤提升性能的启发，探索能否在预训练阶段通过扩展计算步骤来改进模型对单个 token 的生成能力。提出了 PonderLM-2，一种在连续空间中利用潜在思维进行预训练的新方法。该模型被训练为首先生成潜在思维，然后基于这些思维生成目标 token，从而在预训练期间实现计算步骤的扩展。实验表明，这种在连续空间中进行潜在思维预训练的方法能够有效提升语言模型的生成质量和推理能力。
+
+🏷️ LLM, reasoning, pretraining, foundation-model
+
+---
+
+### 24. R-WoM：面向计算机使用代理的检索增强世界模型
+
+[R-WoM: Retrieval-augmented World Model For Computer-use Agents](https://arxiv.org/abs/2510.11892) — **ArXiv CS.CL (LLM/NLP)** · 11 小时前 · ⭐ 29/30
+
+> 大语言模型作为世界模型用于计算机使用代理时，受限于幻觉和静态知识，导致在长视界模拟中出现复合错误。提出了 R-WoM，一种检索增强的世界模型，旨在通过动态检索相关信息来缓解幻觉问题。该方法结合了外部检索机制，使模型能够利用最新知识模拟未来状态和预测动作结果，从而减少对静态训练数据的依赖。R-WoM 能够有效提升计算机使用代理在数字环境中的决策准确性和长视界任务执行能力。
+
+🏷️ world-model, agent, RAG, computer-use
+
+---
+
+### 25. 代理式 AI 的适应性：后训练、记忆与技能综述
+
+[Adaptation of Agentic AI: A Survey of Post-Training, Memory, and Skills](https://arxiv.org/abs/2512.16301) — **ArXiv CS.CL (LLM/NLP)** · 11 小时前 · ⭐ 29/30
+
+> 大语言模型代理正从仅依赖提示词向更复杂的适应性机制演进，但当前研究在后训练、记忆和技能方面呈现碎片化。这是一篇关于代理式 AI 适应性的综述，系统梳理了后训练、持久记忆和可重用技能三个关键方向。文章分析了包括策略强化学习、记忆累积机制以及技能获取在内的最新进展，探讨了如何让代理具备持续适应环境的能力。该综述旨在整合分散的研究方向，为构建具备长期适应性和高智能水平的 AI 代理提供系统性指导。
+
+🏷️ agent, survey, RL, memory
+
+---
+
+*生成于 2026-03-10 15:48 | 扫描 107 源 → 获取 5613 篇 → 精选 25 篇*
 *基于 [Hacker News Popularity Contest 2025](https://refactoringenglish.com/tools/hn-popularity/) RSS 源列表，由 [Andrej Karpathy](https://x.com/karpathy) 推荐*
 *由「懂点儿AI」制作，欢迎关注同名微信公众号获取更多 AI 实用技巧 💡*
