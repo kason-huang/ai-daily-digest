@@ -156,7 +156,9 @@ type CategoryId =
   'ai-ml' | 'security' | 'engineering' | 'tools' | 'opinion' | 'other' |
   // 新增 8 个 ArXiv 细分领域
   'arxiv-cl' | 'arxiv-lg' | 'arxiv-cv' | 'arxiv-ai' |
-  'arxiv-ro' | 'arxiv-sy' | 'arxiv-ne' | 'arxiv-hc';
+  'arxiv-ro' | 'arxiv-sy' | 'arxiv-ne' | 'arxiv-hc' |
+  // 新增 3 个热门研究子领域
+  'arxiv-emb' | 'arxiv-wm' | 'arxiv-mllm';
 
 export const CATEGORY_META: Record<CategoryId, { emoji: string; label: string; description: string }> = {
   // 原有基础分类
@@ -176,6 +178,11 @@ export const CATEGORY_META: Record<CategoryId, { emoji: string; label: string; d
   'arxiv-sy':    { emoji: '🎛️', label: '系统与控制', description: 'ArXiv CS.SY: 控制理论、系统优化' },
   'arxiv-ne':    { emoji: '🔮', label: '神经与进化计算', description: 'ArXiv CS.NE: 神经网络、进化算法' },
   'arxiv-hc':    { emoji: '👤', label: '人机交互', description: 'ArXiv CS.HC: HCI、用户体验' },
+
+  // 新增热门研究子领域
+  'arxiv-emb':   { emoji: '🦾', label: '具身与导航', description: 'Embodied AI、导航与SLAM、机器人学习、VLA模型、传感器-运动控制' },
+  'arxiv-wm':    { emoji: '🌍', label: '世界模型', description: 'World Models、环境模型、仿真、动力学学习、预测模型' },
+  'arxiv-mllm':  { emoji: '🎨', label: '多模态LLM', description: '多模态大语言模型、视觉-语言模型、多模态推理、对齐' },
 };
 
 export type { CategoryId };
@@ -793,6 +800,9 @@ function buildScoringPrompt(articles: Array<{ index: number; title: string; desc
 - arxiv-sy: 系统与控制（CS.SY）- 控制理论、系统优化、自动化、信号处理
 - arxiv-ne: 神经与进化计算（CS.NE）- 神经网络架构、进化算法、遗传算法
 - arxiv-hc: 人机交互（CS.HC）- HCI、用户界面、交互设计、可视化
+- arxiv-emb: 具身与导航 - Embodied AI、视觉导航、SLAM、机器人学习、VLA模型、传感器-运动控制
+- arxiv-wm: 世界模型 - 环境模型、世界仿真、动力学预测、基于模型的强化学习、视频预测
+- arxiv-mllm: 多模态LLM - 视觉-语言模型、多模态理解与生成、对齐、视觉指令微调
 
 **重要提示**：
 - 如果文章来源是 ArXiv（如 "ArXiv CS.AI"、"ArXiv CS.RO"），优先使用对应的 arxiv-* 分类
@@ -800,7 +810,7 @@ function buildScoringPrompt(articles: Array<{ index: number; title: string; desc
 
 ## 关键词提取
 提取 2-4 个最能代表文章主题的关键词（用英文，简短）。
-**优先关键词：** LLM, agent, multimodal, transformer, engineering, tools, framework, VLA, world-model, robotics, diffusion, RL, foundation-model
+**优先关键词：** LLM, agent, multimodal, transformer, engineering, tools, framework, VLA, world-model, robotics, diffusion, RL, foundation-model, embodied, navigation, SLAM, sensorimotor, vision-language, VLM
 
 ## 待评分文章
 
@@ -844,7 +854,8 @@ async function scoreArticlesWithAI(
   const validCategories = new Set<string>([
     'ai-ml', 'security', 'engineering', 'tools', 'opinion', 'other',
     'arxiv-cl', 'arxiv-lg', 'arxiv-cv', 'arxiv-ai',
-    'arxiv-ro', 'arxiv-sy', 'arxiv-ne', 'arxiv-hc'
+    'arxiv-ro', 'arxiv-sy', 'arxiv-ne', 'arxiv-hc',
+    'arxiv-emb', 'arxiv-wm', 'arxiv-mllm'
   ]);
   
   for (let i = 0; i < batches.length; i += MAX_CONCURRENT_GEMINI) {
