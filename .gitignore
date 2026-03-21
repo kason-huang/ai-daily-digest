@@ -2,3 +2,5 @@ generated_imgs/
 node_modules/
 *.log
 digest.md
+arxiv-digest-cs.*
+digest-*

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-AI Daily Digest is an intelligent RSS aggregation tool that fetches articles from 98 RSS sources (90 top technical blogs curated by Andrej Karpathy's Hacker News Popularity Contest 2025, plus ArXiv paper feeds and AI lab blogs) and uses AI to score, filter, and generate structured daily digests with Chinese translations. The project is a zero-dependency TypeScript application that runs on Bun.
+AI Daily Digest is an intelligent RSS aggregation tool that fetches articles from 111 RSS sources (90 top technical blogs curated by Andrej Karpathy's Hacker News Popularity Contest 2025, plus 8 ArXiv paper feeds, 3 AI lab blogs, 2 research labs, 2 robotics media sources, and 5 AI media sources) and uses AI to score, filter, and generate structured daily digests with Chinese translations. The project is a zero-dependency TypeScript application that runs on Bun.
 
 ## Running the Application
 
@@ -33,21 +33,25 @@ RSS Fetching → Time Filtering → AI Scoring → AI Summarization → Trend An
 
 ### Key Components
 
-**1. RSS Feed Layer** (lines 18-129, 190-380)
-- 98 RSS feed definitions: 90 from Karpathy's curated list + 8 extended sources
+**1. RSS Feed Layer** (lines 18-380)
+- 111 RSS feed definitions across multiple source types
   - **Original 90**: Individual technical blogs (category: `blog`, default)
-  - **ArXiv feeds** (3): cs.AI, cs.RO, cs.LG for AI/ML/Robotics papers (category: `arxiv`)
+  - **ArXiv feeds** (8): cs.CL, cs.LG, cs.CV, cs.AI, cs.RO, cs.SY, cs.NE, cs.HC for academic papers (category: `arxiv`)
   - **AI Lab Blogs** (3): Google DeepMind, OpenAI, Anthropic (category: `ai-lab`)
   - **Research Labs** (2): BAIR Berkeley, MIT AI (category: `research`)
+  - **Robotics Media** (2): The Robot Report, IEEE Spectrum Automation (category: `robotics-media`)
+  - **AI Media** (5): MIT Technology Review AI, VentureBeat AI, AI News, Synced, TNW AI (category: `ai-media`)
 - Concurrent fetching with controlled concurrency (10 parallel, 15s timeout)
 - XML parsing for both RSS 2.0 and Atom formats with manual CDATA handling
 - Resilient error handling - individual feed failures don't stop execution
 
-**Feed Categories:**
+**Feed Source Categories:**
 - `blog`: Individual technical blogs (default for original 90 feeds)
-- `arxiv`: ArXiv preprint repositories (cs.AI, cs.RO, cs.LG)
+- `arxiv`: ArXiv preprint repositories (8 CS subcategories)
 - `ai-lab`: Corporate research labs (OpenAI, DeepMind, Anthropic)
 - `research`: University research groups (BAIR, MIT)
+- `robotics-media`: Robotics industry news sources
+- `ai-media`: AI-focused news and media outlets
 - `conference`: Academic conferences (reserved for future)
 
 **2. AI Provider Layer** (lines 369-480)
@@ -58,7 +62,8 @@ RSS Fetching → Time Filtering → AI Scoring → AI Summarization → Trend An
 
 **3. Scoring System** (lines 567-623)
 - Three-dimensional scoring: relevance, quality, timeliness (1-10 scale)
-- Six-category classification: `ai-ml`, `security`, `engineering`, `tools`, `opinion`, `other`
+- Fourteen-category classification (6 basic + 8 ArXiv-specific, see Category System below)
+- AI prioritizes ArXiv-specific categories for academic paper sources
 - Batched AI calls (10 articles per batch, 2 concurrent batches)
 - Keywords extraction (top 4 per article)
 
@@ -98,6 +103,16 @@ ScoredArticle {
 Markdown Report (6 sections)
 ```
 
+**7. Article Selection Algorithm** (lines 1413-1445)
+- **Diversity-first selection**: Ensures all 14 categories are represented in final report
+- Algorithm steps:
+  1. Group scored articles by category
+  2. Select highest-scoring article from each category
+  3. Fill remaining slots with next highest-scoring articles across all categories
+  4. Sort final selection by total score
+- Guarantees category coverage even when some categories have lower average scores
+- Prevents report from being dominated by a single high-scoring category (e.g., machine learning papers)
+
 ## Important Constants
 
 Located at top of `scripts/digest.ts`:
@@ -122,13 +137,33 @@ The AI prompts are provider-agnostic and require no changes. For OpenAI-compatib
 
 ## Category System
 
-Six hardcoded categories with emoji and label mappings in `CATEGORY_META`:
-- `ai-ml`: 🤖 AI / ML
-- `security`: 🔒 Security
-- `engineering`: ⚙️ Engineering
-- `tools`: 🛠 Tools / Open Source
-- `opinion`: 💡 Opinion / Miscellaneous
-- `other`: 📝 Other
+Fourteen categories defined in `CATEGORY_META` (lines 161-178):
+
+### Basic Categories (6)
+For blog posts, media articles, and general technical content:
+- `ai-ml`: 🤖 AI / ML - General AI, LLMs, multimodal, Agentic AI, embodied intelligence
+- `security`: 🔒 Security - Network security, privacy, vulnerabilities, encryption
+- `engineering`: ⚙️ Engineering - Software engineering, architecture, system design, programming languages
+- `tools`: 🛠 Tools / Open Source - Development tools, open source projects, new libraries/frameworks
+- `opinion`: 💡 Opinion / Miscellaneous - Industry perspectives, technical thoughts, career development
+- `other`: 📝 Other - Content not fitting above categories
+
+### ArXiv-Specific Categories (8)
+Only used for academic papers from ArXiv sources, mapped to ArXiv CS classifications:
+- `arxiv-cl`: 🗣️ Computation and Language / LLM - NLP, LLMs, dialogue systems, machine translation, speech recognition (CS.CL)
+- `arxiv-lg`: 🧠 Machine Learning - ML theory, deep learning, reinforcement learning, Bayesian methods (CS.LG)
+- `arxiv-cv`: 👁️ Computer Vision - Image recognition, object detection, video analysis, 3D vision (CS.CV)
+- `arxiv-ai`: 🤖 Artificial Intelligence - General AI, knowledge reasoning, planning, multi-agent systems (CS.AI)
+- `arxiv-ro`: 🦾 Robotics - Robot control, motion planning, SLAM, manipulation (CS.RO)
+- `arxiv-sy`: 🎛️ Systems and Control - Control theory, system optimization, automation, signal processing (CS.SY)
+- `arxiv-ne`: 🔮 Neural and Evolutionary Computing - Neural network architectures, evolutionary algorithms, genetic algorithms (CS.NE)
+- `arxiv-hc`: 👤 Human-Computer Interaction - HCI, user interfaces, interaction design, visualization (CS.HC)
+
+**AI Classification Behavior:**
+- For ArXiv sources: Prioritizes ArXiv-specific categories based on the paper's CS classification
+- For blog/media sources: Uses basic categories based on content
+- AI scoring prompt includes detailed guidance for selecting appropriate categories
+- See `docs/FEED_CLASSIFICATION.md` and `docs/CATEGORIES_QUICK_REFERENCE.md` for complete details
 
 ## Error Handling Strategy
 
@@ -155,3 +190,11 @@ Structure: `geminiApiKey`, `timeRange`, `topN`, `language`, `lastUsed`
 - Date/time handling uses native `Date` object with relative time formatting
 - XML parsing manually handles CDATA sections for Atom feeds
 - Output is always valid Markdown GitHub/Obsidian rendering
+
+## Documentation
+
+Additional documentation in `docs/`:
+- `FEED_CLASSIFICATION.md` - Complete 14-category system with all 111 RSS feed mappings
+- `CATEGORIES_QUICK_REFERENCE.md` - Quick reference for category selection
+- `ARTICLE_SELECTION_ALGORITHM.md` - Diversity-first selection algorithm details
+- `ARXIV_REFACTORING_SUMMARY.md` - ArXiv category implementation summary
