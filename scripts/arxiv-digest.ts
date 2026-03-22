@@ -57,6 +57,14 @@ interface ArxivPaper {
   totalScore: number;
 }
 
+interface ParsedRSSItem {
+  title: string;
+  link: string;
+  pubDate: string;
+  description: string;
+  authors: string[];
+}
+
 interface ArxivScoringResult {
   results: Array<{
     index: number;
@@ -155,10 +163,25 @@ function parseDate(dateStr: string): Date | null {
   return null;
 }
 
-function parseRSSItems(xml: string): Array<{ title: string; link: string; pubDate: string; description: string }> {
-  const items: Array<{ title: string; link: string; pubDate: string; description: string }> = [];
+function parseRSSItems(xml: string): Array<ParsedRSSItem> {
+  const items: Array<ParsedRSSItem> = [];
 
   const isAtom = xml.includes('<feed') && (xml.includes('xmlns="http://www.w3.org/2005/Atom"') || xml.includes('<feed '));
+
+  // Helper to extract authors from Atom format
+  function extractAtomAuthors(entryXml: string): string[] {
+    const authors: string[] = [];
+    const authorPattern = /<author[\s>]([\s\S]*?)<\/author>/gi;
+    let authorMatch;
+    while ((authorMatch = authorPattern.exec(entryXml)) !== null) {
+      const authorXml = authorMatch[1];
+      const name = getTagContent(authorXml, 'name');
+      if (name) {
+        authors.push(name);
+      }
+    }
+    return authors;
+  }
 
   if (isAtom) {
     const entryPattern = /<entry[\s>]([\s\S]*?)<\/entry>/gi;
@@ -173,9 +196,10 @@ function parseRSSItems(xml: string): Array<{ title: string; link: string; pubDat
       }
       const pubDate = getTagContent(entryXml, 'published') || getTagContent(entryXml, 'updated') || getTagContent(entryXml, 'date');
       const description = getTagContent(entryXml, 'summary') || getTagContent(entryXml, 'content') || '';
+      const authors = extractAtomAuthors(entryXml);
 
       if (title && link) {
-        items.push({ title, link, pubDate, description: stripHtml(description) });
+        items.push({ title, link, pubDate, description: stripHtml(description), authors });
       }
     }
   } else {
@@ -189,7 +213,7 @@ function parseRSSItems(xml: string): Array<{ title: string; link: string; pubDat
       const description = getTagContent(itemXml, 'description') || getTagContent(itemXml, 'summary') || getTagContent(itemXml, 'content') || '';
 
       if (title && link) {
-        items.push({ title, link, pubDate, description: stripHtml(description) });
+        items.push({ title, link, pubDate, description: stripHtml(description), authors: [] });
       }
     }
   }
@@ -438,7 +462,7 @@ function extractArxivId(link: string): string {
 }
 
 async function fetchSingleArxivFeed(categoryCode: ArxivCategoryCode): Promise<{
-  papers: Array<{ title: string; link: string; pubDate: Date; description: string }>;
+  papers: Array<{ title: string; link: string; pubDate: Date; description: string; authors: string[] }>;
   error?: FeedError;
 }> {
   const category = ARXIV_CATEGORIES[categoryCode];
@@ -501,6 +525,7 @@ async function fetchSingleArxivFeed(categoryCode: ArxivCategoryCode): Promise<{
         link: item.link,
         pubDate: parseDate(item.pubDate) || new Date(0),
         description: item.description,
+        authors: item.authors,
       }))
     };
   } catch (error) {
@@ -642,7 +667,7 @@ function applyTopicBonus(
 }
 
 async function scorePapersWithAI(
-  papers: Array<{ title: string; link: string; pubDate: Date; description: string }>,
+  papers: Array<{ title: string; link: string; pubDate: Date; description: string; authors: string[] }>,
   categoryName: string,
   aiClient: AIClient
 ): Promise<{
@@ -759,11 +784,14 @@ async function scorePapersWithAI(
       });
     }
 
+    // Use AI-extracted authors, fallback to ArXiv API authors if AI didn't extract any
+    const finalAuthors = (score.authors && score.authors.length > 0) ? score.authors : paper.authors;
+
     return {
       paper,
       arxivId: extractArxivId(paper.link),
       scores: scoresWithBonus,
-      authors: score.authors,
+      authors: finalAuthors,
       contributions: score.contributions,
       keywords: score.keywords,
     };
@@ -827,7 +855,7 @@ ${papersList}
 
 async function summarizePapers(
   scoredPapers: Array<{
-    paper: { title: string; link: string; pubDate: Date; description: string };
+    paper: { title: string; link: string; pubDate: Date; description: string; authors: string[] };
     arxivId: string;
     scores: { novelty: number; significance: number; clarity: number };
     authors: string[];
